@@ -19,8 +19,7 @@ func main(){
         }
         fmt.Println(conn)
         result := bufio.NewReader(conn)
-        RequestContent := []string{}
-        RequestContent = requestBreaker(result)
+        RequestContent  := requestBreaker(result)
         fmt.Print(RequestContent)
         if err != nil {
             panic("some thing wrong baby")
