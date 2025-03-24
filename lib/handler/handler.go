@@ -5,6 +5,6 @@ import (
 )
 
 func heyHandler() {
-    fmt.Println("Hello from handler!")
+    fmt.Println("Hello from check for git!")
 }
 
