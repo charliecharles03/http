@@ -1,10 +1,9 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	handler "http/lib/utils"
 	"net"
-    "io"
 )
 
 func main(){
@@ -12,45 +11,18 @@ func main(){
     if err != nil {
         fmt.Println("error maa")
     }
+    defer ln.Close()
     for {
         conn, err := ln.Accept()
        if err != nil {
             fmt.Println("error maa")
+            return 
         }
         fmt.Println(conn)
-        result := bufio.NewReader(conn)
-        RequestContent  := requestBreaker(result)
-        fmt.Print(RequestContent)
+        handler.HandleConnection(conn) // getting request content
         if err != nil {
             panic("some thing wrong baby")
         }
     }
 }
 
-func requestBreaker(result *bufio.Reader) []string {
-    RequestContent := [] string{}
-    for i:=0 ;i < 100 ; i++ {
-        val,err := result.ReadBytes('\n') // nothing but a ascii  don't know the cost
-        fmt.Println(len(val))
-        if err != nil {
-            if err == io.EOF{
-                if len(val) >0 {
-                   RequestContent = append(RequestContent,string(val));
-                }
-                break
-            }
-        }
-        currentString := string(val)
-        if len(currentString) == 0 {
-            fmt.Println("you meet you end so die")
-            break;
-        }
-
-        RequestContent = append(RequestContent, currentString)
-
-        if err != nil{
-            panic("processed it wrong bro")
-        }
-    } 
-    return RequestContent
-}
