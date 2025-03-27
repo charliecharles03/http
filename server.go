@@ -19,10 +19,7 @@ func main(){
             return 
         }
         fmt.Println(conn)
-        handler.HandleConnection(conn) // getting request content
-        if err != nil {
-            panic("some thing wrong baby")
-        }
+        go handler.HandleConnection(conn) // Now get concurrency work
     }
 }
 
